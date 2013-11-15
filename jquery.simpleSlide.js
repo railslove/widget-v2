@@ -1,4 +1,4 @@
-//
+//  production version is at:  http://de.dawanda.com/widget/v2/jquery.simpleSlide.js
 //
 //  simpleSlide 1.5.6
 //
@@ -101,7 +101,7 @@
 //
 // 
 
-function simpleSlide(incoming_options) {
+window.simpleSlide = function(incoming_options) {
   jQuery(function($) {
     var options = {
       'status_width': 20,
@@ -286,7 +286,7 @@ function ssInit(){
     /* Sets size of the "tray" that holds the "slides" */
     function setTraySize(slideWindow, count, viewer_width) {
       
-      var slider_width = count * viewer_width;
+      var slider_width = count * ($('#dawandaWidgetInnerContainer').width() - 2); // dawandahack
       
       $(slideWindow).find('.simpleSlide-tray').css({
         'width': slider_width + 'px'
