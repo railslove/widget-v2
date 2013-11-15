@@ -1,4 +1,4 @@
-document.write('<script type="text/javascript" src="./jquery.simpleSlide.js"></script>')
+// document.write('<script type="text/javascript" src="http://de.dawanda.com/widget/v2/jquery.simpleSlide.js"></script>')
 
 DaWanda.Widget = function(options) {
   if(!options || (!options.sourceType && !options.sourceId))
@@ -75,8 +75,11 @@ DaWanda.Widget.prototype = {
   getImageUrl: function(product) {
     var imageUrl = product.default_image[this.options.imageVersion]
 
-    if(imageUrl.indexOf("http://") == -1)
-      imageUrl = "http://de.dawanda.com" + imageUrl
+    if(imageUrl.indexOf("https://") == -1 && imageUrl.indexOf("http://") == -1)
+      imageUrl = "https://dawandaimages.s3.amazonaws.com" + imageUrl
+    else {
+      imageUrl = imageUrl.replace(/https?\:\/\/.+.com/, "https://dawandaimages.s3.amazonaws.com")
+    }
 
     return imageUrl
   },
@@ -125,8 +128,9 @@ DaWanda.Widget.prototype = {
 
   renderProduct: function(product, productIndex) {
     var productImage = this.getImageUrl(product)
-    if(productImage.indexOf("http://") == -1)
-      productImage = "http://de.dawanda.com" + productImage
+    if(productImage.indexOf("https://") == -1 && productImage.indexOf("http://") == -1)
+      productImage = "https://dawandaimages.s3.amazonaws.com" + productImage
+
 
     var result =  '' +
     '<td valign="top" width="' + this.imageWidth() + '">' +
@@ -138,7 +142,7 @@ DaWanda.Widget.prototype = {
       result += '' +
       '  <div class="productInformation"><a target="_blank" href="' + this.addTrackingCode(product.product_url) + '">' + product.name + '</a></div>' +
       '  <span class="dawandaWidgetSmall">' +
-      '    <a target="_blank" href="' + this.addTrackingCode('http://' + this.options.language + '.dawanda.com/user/' + product.user.name) + '">' + product.user.name + '</a>' +
+      '    <a target="_blank" href="' + this.addTrackingCode('https://' + this.options.language + '.dawanda.com/user/' + product.user.name) + '">' + product.user.name + '</a>' +
       '  </span>'
     }
 
@@ -189,7 +193,7 @@ DaWanda.Widget.prototype = {
       if(!eval(this.options.hideLogo))
         result += '' +
           '<a href="' + this.addTrackingCode('http://' + this.options.language + '.dawanda.com') + '" target="_blank">' +
-          '  <img src="http://de.dawanda.com/images/newsletter/logo.png" width=100 style="vertical-align: middle;" />' +
+          '  <img src="https://de.dawanda.com/images/newsletter/logo.png" width=100 style="vertical-align: middle;" />' +
           '</a>'
 
       if(showNormalVersion)
@@ -210,18 +214,18 @@ DaWanda.Widget.prototype = {
       '     <tr>'+
       '       <td style="padding: 10px 0px 10px 10px;">' +
       '         <div class="left-button" rel="' + this.options.sourceId +'" style="cursor: pointer;' + (_this.showPagination() ? '' : 'display: none') + '"> ' +
-      '           <img src="http://de.dawanda.com/images/v3/slider/arrow_left.gif" style="border: none" />' +
+      '           <img src="https://de.dawanda.com/images/v3/slider/arrow_left.gif" style="border: none" />' +
       '         </div>' +
       '       </td>' +
       '       <td style="padding: 10px 10px 10px 0px;" align="right">' +
       '         <div class="right-button" rel="' + this.options.sourceId +'" style="cursor: pointer;' + (_this.showPagination() ? '' : 'display: none') + '">' +
-      '           <img src="http://de.dawanda.com/images/v3/slider/arrow_right.gif" style="border: none" />' +
+      '           <img src="https://de.dawanda.com/images/v3/slider/arrow_right.gif" style="border: none" />' +
       '         </div>' +
       '       </td>' +
       '     </tr>' +
       '   </table>' +
       ' </div>' +
-      ' <img src="http://t.dawanda.com/_t_/?t=js_widget&src_id='+ this.options.sourceId +'&src_type='+ this.options.sourceType +'&rand='+ this.options.uuid +'" alt="DaWanda JS-Widget" />' +
+      ' <img src="https://t.dawanda.com/_t_/?t=js_widget&src_id='+ this.options.sourceId +'&src_type='+ this.options.sourceType +'&rand='+ this.options.uuid +'" alt="DaWanda JS-Widget" />' +
       '</div>'
 
       _this.containerId = _this.getUniqueContainerId("dawandaWidgetOuterContainer")
@@ -336,7 +340,7 @@ DaWanda.Widget.prototype = {
       %{containerId} #dawandaWidgetContainer {                                                                                                                                              \
     "
     if (this.options.backgroundPattern)
-      result += "background: url(http://de.dawanda.com/widget/v2/background_patterns/" + this.options.backgroundPattern + ");                                                               \
+      result += "background: url(https://de.dawanda.com/widget/v2/background_patterns/" + this.options.backgroundPattern + ");                                                               \
       "
     else
       result += "                                                                                                                                                                           \
