@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Widget</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="latest-jquery.js"></script>
+    <script type="text/javascript" src="dawanda-0.1.0.js"></script>
+    <script type="text/javascript" src="jquery.simpleSlide.js"></script>
+    <script type="text/javascript" src="widget.js"></script>
+    <script type="text/javascript">
+      window.MK = {};
+
+      MK.initDawandaWidget = function() {
+        $('#dawanda-widget').each(function() {
+          var dawandaWidget, options;
+          options = $.extend({}, {
+            containerElement: "#dawanda-widget",
+            responsiveImageWidth: true,
+            sourceId: "6480586",
+            uuid: "916cc11d02",
+            sourceType: "Pinboard",
+            autoSlide: 'false',
+            hideLogo: '1',
+            language: "de",
+            rows: '2',
+            cols: '2',
+            title: 'Material-Sets bestellen!'
+          }, $(this).data('widget-options'));
+          dawandaWidget = new DaWanda.Widget(options);
+          dawandaWidget.render();
+        });
+      };
+    </script>
+    <div id="dawanda-widget" data-widget-options="{sourceId: '...'}"></div>
+  </body>
+</html>
